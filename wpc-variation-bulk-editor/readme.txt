@@ -2,10 +2,9 @@
 Contributors: wpclever
 Donate link: https://wpclever.net
 Tags: woocommerce, wpc, variation, bulk editor
-Requires at least: 4.0
 Tested up to: 6.7
-Version: 1.2.0
-Stable tag: 1.2.0
+Version: 1.2.1
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +44,14 @@ When combining with WPC Variation Duplicator for WooCommerce plugin, the manual 
 Outstanding WPC plugins providing variation selector interfaces such as [WPC Variations Table](https://wordpress.org/plugins/wpc-variations-table/) (custom name & image), [WPC Variations Radio Buttons](https://wordpress.org/plugins/wpc-variations-radio-buttons/) (custom name & image), [WPC Show Single Variations](https://wordpress.org/plugins/wpc-show-single-variations/) (default/disable/enable/reverse)
 
 For some Premium WPC plugins, users can configure settings at variation level such as [WPC Product Quantity](https://wordpress.org/plugins/wpc-product-quantity/) (min/max/step rules for variations) and [WPC Countdown Timer](https://wordpress.org/plugins/wpc-countdown-timer/) (variation-based countdown timers).
+
+= Not what you needed? =
+
+Please try other plugins from us:
+
+- [WPC Admin Columns](https://wordpress.org/plugins/wpc-admin-columns/ "WPC Admin Columns")
+- [WPC Variation Duplicator](https://wordpress.org/plugins/wpc-variation-duplicator/ "WPC Variation Duplicator")
+- [WPC Backend Product Filter](https://wordpress.org/plugins/wpc-backend-product-filter/ "WPC Backend Product Filter")
 
 == Installation ==
 

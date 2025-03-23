@@ -3,7 +3,7 @@
 Plugin Name: WPC Variation Bulk Editor for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: WPC Variation Bulk Editor helps you save precious time working on variations.
-Version: 1.2.0
+Version: 1.2.1
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: wpc-variation-bulk-editor
@@ -12,12 +12,12 @@ Requires Plugins: woocommerce
 Requires at least: 4.0
 Tested up to: 6.7
 WC requires at least: 3.0
-WC tested up to: 9.5
+WC tested up to: 9.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-! defined( 'WPCVB_VERSION' ) && define( 'WPCVB_VERSION', '1.2.0' );
+! defined( 'WPCVB_VERSION' ) && define( 'WPCVB_VERSION', '1.2.1' );
 ! defined( 'WPCVB_LITE' ) && define( 'WPCVB_LITE', __FILE__ );
 ! defined( 'WPCVB_FILE' ) && define( 'WPCVB_FILE', __FILE__ );
 ! defined( 'WPCVB_URI' ) && define( 'WPCVB_URI', plugin_dir_url( __FILE__ ) );
