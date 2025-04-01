@@ -322,6 +322,14 @@ class Wpcvb_Backend {
 				$props['height'] = wc_clean( wp_unslash( $_fields['variable_height'] ) );
 			}
 
+			if ( ! empty( $_fields['variable_shipping_class'] ) && ( $_fields['variable_shipping_class'] !== 'wpcvb_no_change' ) ) {
+				$props['shipping_class_id'] = wc_clean( wp_unslash( $_fields['variable_shipping_class'] ) );
+			}
+
+			if ( isset( $_fields['variable_tax_class'] ) && ( $_fields['variable_tax_class'] !== 'wpcvb_no_change' ) ) {
+				$props['tax_class'] = wc_clean( wp_unslash( $_fields['variable_tax_class'] ) );
+			}
+
 			foreach ( $variations as $variation_id ) {
 				$variation = wc_get_product_object( 'variation', $variation_id );
 				$errors    = $variation->set_props( $props );
