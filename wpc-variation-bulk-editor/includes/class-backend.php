@@ -105,23 +105,37 @@ class Wpcvb_Backend {
         <?php
     }
 
+    private static function filter_variation_attributes( $attribute ) {
+        return true === $attribute->get_variation();
+    }
+
     function get_filter_form( $product_object, $context = 'editor' ) {
         if ( $product_object && $product_object->is_type( 'variable' ) ) {
-            $attributes = $product_object->get_variation_attributes();
+            $attributes = array_filter( $product_object->get_attributes(), [
+                    __CLASS__,
+                    'filter_variation_attributes'
+            ] );
             $children   = $product_object->get_children();
 
-            if ( is_array( $attributes ) && ( count( $attributes ) > 0 ) ) {
-                foreach ( $attributes as $attribute_name => $options ) {
+            if ( ! empty( $attributes ) ) {
+                foreach ( $attributes as $attribute_name => $attribute ) {
                     echo '<div style="margin-top: 10px">';
-                    echo '<div>' . wc_attribute_label( $attribute_name ) . '</div>';
+                    echo '<div>' . wc_attribute_label( $attribute->get_name() ) . '</div>';
 
-                    if ( ! empty( $options ) ) {
-                        $attribute_name_st = sanitize_title( $attribute_name );
-                        echo '<select class="wpcvb_attribute" name="' . esc_attr( $attribute_name_st ) . '" multiple>';
-                        echo '<option value="wpcvb_any" ' . ( isset( $terms[ $attribute_name_st ] ) && in_array( 'wpcvb_any', $terms[ $attribute_name_st ] ) ? 'selected' : '' ) . '>' . sprintf( /* translators: attribute */ esc_html__( 'Any %s...', 'wpc-variation-bulk-editor' ), wc_attribute_label( $attribute_name ) ) . '</option>';
+                    if ( ! empty( $attribute->get_options() ) ) {
+                        echo '<select class="wpcvb_attribute" name="' . esc_attr( $attribute_name ) . '" multiple>';
+                        echo '<option value="wpcvb_any">' . sprintf( /* translators: attribute */ esc_html__( 'Any %s...', 'wpc-variation-bulk-editor' ), wc_attribute_label( $attribute->get_name() ) ) . '</option>';
 
-                        foreach ( $options as $option ) {
-                            echo '<option value="' . esc_attr( $option ) . '" ' . ( isset( $terms[ $attribute_name_st ] ) && in_array( $option, $terms[ $attribute_name_st ] ) ? 'selected' : '' ) . '>' . esc_html( $option ) . '</option>';
+                        foreach ( $attribute->get_options() as $option ) {
+                            if ( $term = get_term_by( 'id', $option, $attribute->get_name() ) ) {
+                                $option_label = $term->name;
+                                $option_value = $term->slug;
+                            } else {
+                                $option_label = $option;
+                                $option_value = $option;
+                            }
+
+                            echo '<option value="' . esc_attr( $option_value ) . '">' . esc_html( $option_label ) . '</option>';
                         }
 
                         echo '</select>';
@@ -168,7 +182,7 @@ class Wpcvb_Backend {
         }
 
         $product_id = absint( sanitize_text_field( $_POST['post_id'] ?? 0 ) );
-        $attrs      = self::sanitize_array( $_POST['attrs'] ?? [] );
+        $attrs      = $_POST['attrs'] ?? [];
         $variations = self::get_variations( $product_id, $attrs );
 
         echo sprintf( /* translators: count */ _n( '%s variation will be affected', '%s variations will be affected', count( $variations ), 'wpc-variation-bulk-editor' ), '<strong>' . count( $variations ) . '</strong>' ) . self::get_ids( $variations );
@@ -194,7 +208,7 @@ class Wpcvb_Backend {
         }
 
         $product_id = absint( sanitize_text_field( $_POST['post_id'] ?? 0 ) );
-        $attrs      = self::sanitize_array( $_POST['attrs'] ?? [] );
+        $attrs      = $_POST['attrs'] ?? [];
         $variations = self::get_variations( $product_id, $attrs );
         $fields     = sanitize_post( $_POST['fields'] ?? '' );
 
@@ -355,7 +369,7 @@ class Wpcvb_Backend {
         }
 
         $product_id = absint( sanitize_text_field( $_POST['post_id'] ?? 0 ) );
-        $attrs      = self::sanitize_array( $_POST['attrs'] ?? [] );
+        $attrs      = $_POST['attrs'] ?? [];
         $variations = self::get_variations( $product_id, $attrs );
 
         if ( ! empty( $variations ) ) {
@@ -376,8 +390,8 @@ class Wpcvb_Backend {
         }
 
         $count      = 0;
-        $limit      = defined( 'WC_MAX_LINKED_VARIATIONS' ) ? WC_MAX_LINKED_VARIATIONS : 50;
-        $attrs      = self::sanitize_array( $_POST['attrs'] ?? [] );
+        $limit      = apply_filters( 'wpcvb_bulk_generate_limit', defined( 'WC_MAX_LINKED_VARIATIONS' ) ? WC_MAX_LINKED_VARIATIONS : 50 );
+        $attrs      = $_POST['attrs'] ?? [];
         $product_id = absint( sanitize_text_field( $_POST['post_id'] ?? 0 ) );
         $product    = wc_get_product( $product_id );
         $attributes = [];
@@ -416,6 +430,7 @@ class Wpcvb_Backend {
                 $variation_id = $variation->save();
 
                 do_action( 'product_variation_linked', $variation_id );
+                do_action( 'wpcvb_bulk_generate_variation', $variation_id, $attrs );
 
                 $count ++;
 
