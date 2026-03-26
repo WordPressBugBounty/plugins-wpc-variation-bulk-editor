@@ -254,6 +254,13 @@ class Wpcvb_Backend {
                 $props['sale_price'] = wc_clean( wp_unslash( $_fields['variable_sale_price'] ) );
             }
 
+            // sku
+            if ( ! apply_filters( 'wc_product_has_unique_sku', true ) ) {
+                if ( ! empty( $_fields['variable_sku'] ) ) {
+                    $props['sku'] = wc_clean( wp_unslash( $_fields['variable_sku'] ) );
+                }
+            }
+
             // enable
 
             if ( $_fields['variable_enabled'] === '1' ) {

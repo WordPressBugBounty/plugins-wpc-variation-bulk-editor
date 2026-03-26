@@ -3,8 +3,8 @@ Contributors: wpclever
 Donate link: https://wpclever.net
 Tags: woocommerce, wpc, variation, bulk editor
 Tested up to: 6.9
-Version: 1.2.5
-Stable tag: 1.2.5
+Version: 1.2.6
+Stable tag: 1.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ Please try other plugins from us:
 4. All done! Now you can use the bulk editor when editing the variable product
 
 == Changelog ==
+
+= 1.2.6 =
+* Updated: Allows to bulk edit SKU when don't need unique SKU (wc_product_has_unique_sku)
 
 = 1.2.5 =
 * Fixed: Optimized the code
