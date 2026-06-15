@@ -13,7 +13,6 @@ class Wpcvb_Backend {
     }
 
     public function __construct() {
-        add_action( 'init', [ $this, 'init' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ] );
         add_action( 'woocommerce_variable_product_before_variations', [ $this, 'bulk_editor_btn' ] );
         add_action( 'woocommerce_product_data_panels', [ $this, 'bulk_editor_popup' ] );
@@ -25,12 +24,6 @@ class Wpcvb_Backend {
         add_action( 'wp_ajax_wpcvb_bulk_remove', [ $this, 'ajax_bulk_remove' ] );
         add_action( 'wp_ajax_wpcvb_bulk_generate', [ $this, 'ajax_bulk_generate' ] );
     }
-
-    function init() {
-        // load text-domain
-        load_plugin_textdomain( 'wpc-variation-bulk-editor', false, basename( WPCVB_DIR ) . '/languages/' );
-    }
-
     function bulk_editor_btn() {
         ?>
         <div class="wpcvb-btn-wrapper">
