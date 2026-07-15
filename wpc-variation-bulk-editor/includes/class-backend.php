@@ -170,12 +170,12 @@ class Wpcvb_Backend {
     }
 
     function ajax_filter_count() {
-        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'wpcvb_nonce' ) ) {
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'wpcvb_nonce' ) ) {
             die( 'Permissions check failed!' );
         }
 
-        $product_id = absint( sanitize_text_field( $_POST['post_id'] ?? 0 ) );
-        $attrs      = $_POST['attrs'] ?? [];
+        $product_id = absint( sanitize_text_field( wp_unslash( $_POST['post_id'] ?? 0 ) ) );
+        $attrs      = wp_unslash( $_POST['attrs'] ?? [] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
         $variations = self::get_variations( $product_id, $attrs );
 
         echo sprintf( /* translators: count */ _n( '%s variation will be affected', '%s variations will be affected', count( $variations ), 'wpc-variation-bulk-editor' ), '<strong>' . count( $variations ) . '</strong>' ) . self::get_ids( $variations );
@@ -184,11 +184,11 @@ class Wpcvb_Backend {
     }
 
     function ajax_filter_form() {
-        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'wpcvb_nonce' ) ) {
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'wpcvb_nonce' ) ) {
             die( 'Permissions check failed!' );
         }
 
-        $product_id     = absint( sanitize_text_field( $_POST['post_id'] ?? 0 ) );
+        $product_id     = absint( sanitize_text_field( wp_unslash( $_POST['post_id'] ?? 0 ) ) );
         $product_object = wc_get_product_object( 'variable', $product_id );
         self::get_filter_form( $product_object );
 
@@ -196,14 +196,14 @@ class Wpcvb_Backend {
     }
 
     function ajax_bulk_update() {
-        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'wpcvb_nonce' ) ) {
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'wpcvb_nonce' ) ) {
             die( 'Permissions check failed!' );
         }
 
-        $product_id = absint( sanitize_text_field( $_POST['post_id'] ?? 0 ) );
-        $attrs      = $_POST['attrs'] ?? [];
+        $product_id = absint( sanitize_text_field( wp_unslash( $_POST['post_id'] ?? 0 ) ) );
+        $attrs      = wp_unslash( $_POST['attrs'] ?? [] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
         $variations = self::get_variations( $product_id, $attrs );
-        $fields     = sanitize_post( $_POST['fields'] ?? '' );
+        $fields     = sanitize_post( wp_unslash( $_POST['fields'] ?? '' ) );
 
         if ( ! empty( $variations ) && ! empty( $fields ) ) {
             $_fields = [];
@@ -222,7 +222,7 @@ class Wpcvb_Backend {
                 $date_on_sale_from = wc_clean( wp_unslash( $_fields['variable_sale_price_dates_from'] ) );
 
                 if ( ! empty( $date_on_sale_from ) ) {
-                    $date_on_sale_from = date( 'Y-m-d 00:00:00', strtotime( $date_on_sale_from ) );
+                    $date_on_sale_from = gmdate( 'Y-m-d 00:00:00', strtotime( $date_on_sale_from ) );
                 }
             }
 
@@ -230,7 +230,7 @@ class Wpcvb_Backend {
                 $date_on_sale_to = wc_clean( wp_unslash( $_fields['variable_sale_price_dates_to'] ) );
 
                 if ( ! empty( $date_on_sale_to ) ) {
-                    $date_on_sale_to = date( 'Y-m-d 23:59:59', strtotime( $date_on_sale_to ) );
+                    $date_on_sale_to = gmdate( 'Y-m-d 23:59:59', strtotime( $date_on_sale_to ) );
                 }
             }
 
@@ -364,12 +364,12 @@ class Wpcvb_Backend {
     }
 
     function ajax_bulk_remove() {
-        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'wpcvb_nonce' ) ) {
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'wpcvb_nonce' ) ) {
             die( 'Permissions check failed!' );
         }
 
-        $product_id = absint( sanitize_text_field( $_POST['post_id'] ?? 0 ) );
-        $attrs      = $_POST['attrs'] ?? [];
+        $product_id = absint( sanitize_text_field( wp_unslash( $_POST['post_id'] ?? 0 ) ) );
+        $attrs      = wp_unslash( $_POST['attrs'] ?? [] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
         $variations = self::get_variations( $product_id, $attrs );
 
         if ( ! empty( $variations ) ) {
@@ -385,14 +385,14 @@ class Wpcvb_Backend {
     }
 
     function ajax_bulk_generate() {
-        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'wpcvb_nonce' ) ) {
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['nonce'] ) ), 'wpcvb_nonce' ) ) {
             die( 'Permissions check failed!' );
         }
 
         $count      = 0;
         $limit      = apply_filters( 'wpcvb_bulk_generate_limit', defined( 'WC_MAX_LINKED_VARIATIONS' ) ? WC_MAX_LINKED_VARIATIONS : 50 );
-        $attrs      = $_POST['attrs'] ?? [];
-        $product_id = absint( sanitize_text_field( $_POST['post_id'] ?? 0 ) );
+        $attrs      = wp_unslash( $_POST['attrs'] ?? [] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+        $product_id = absint( sanitize_text_field( wp_unslash( $_POST['post_id'] ?? 0 ) ) );
         $product    = wc_get_product( $product_id );
         $attributes = [];
 
