@@ -2,9 +2,8 @@
 Contributors: wpclever
 Donate link: https://wpclever.net
 Tags: woocommerce, wpc, variation, bulk editor
-Tested up to: 7.0
-Version: 1.2.8
-Stable tag: 1.2.8
+Tested up to: 7.1
+Stable tag: 1.2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +60,9 @@ Please try other plugins from us:
 4. All done! Now you can use the bulk editor when editing the variable product
 
 == Changelog ==
+
+= 1.2.9 =
+* Fixed: Minor CSS/JS issues in the backend
 
 = 1.2.8 =
 * Fixed: Minor CSS/JS issues in the backend

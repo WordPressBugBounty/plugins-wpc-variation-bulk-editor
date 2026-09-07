@@ -3,27 +3,27 @@
 Plugin Name: WPC Variation Bulk Editor for WooCommerce
 Plugin URI: https://wpclever.net/
 Description: WPC Variation Bulk Editor helps you save precious time working on variations.
-Version: 1.2.8
+Version: 1.2.9
 Author: WPClever
 Author URI: https://wpclever.net
 Text Domain: wpc-variation-bulk-editor
 Domain Path: /languages/
 Requires Plugins: woocommerce
 Requires at least: 5.9
-Tested up to: 7.0
+Tested up to: 7.1
 WC requires at least: 3.0
-WC tested up to: 10.9
+WC tested up to: 11.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-! defined( 'WPCVB_VERSION' ) && define( 'WPCVB_VERSION', '1.2.8' );
+! defined( 'WPCVB_VERSION' ) && define( 'WPCVB_VERSION', '1.2.9' );
 ! defined( 'WPCVB_LITE' ) && define( 'WPCVB_LITE', __FILE__ );
 ! defined( 'WPCVB_FILE' ) && define( 'WPCVB_FILE', __FILE__ );
 ! defined( 'WPCVB_URI' ) && define( 'WPCVB_URI', plugin_dir_url( __FILE__ ) );
 ! defined( 'WPCVB_DIR' ) && define( 'WPCVB_DIR', plugin_dir_path( __FILE__ ) );
 ! defined( 'WPCVB_REVIEWS' ) && define( 'WPCVB_REVIEWS', 'https://wordpress.org/support/plugin/wpc-variation-bulk-editor/reviews/' );
-! defined( 'WPCVB_SUPPORT' ) && define( 'WPCVB_SUPPORT', 'https://wpclever.net/support?utm_source=support&utm_medium=wpcpq&utm_campaign=wporg' );
+! defined( 'WPCVB_SUPPORT' ) && define( 'WPCVB_SUPPORT', 'https://wpclever.net/support/?utm_source=support&utm_medium=wpcpq&utm_campaign=wporg' );
 ! defined( 'WPCVB_CHANGELOG' ) && define( 'WPCVB_CHANGELOG', 'https://wordpress.org/plugins/wpc-variation-bulk-editor/#developers' );
 ! defined( 'WPCVB_DISCUSSION' ) && define( 'WPCVB_DISCUSSION', 'https://wordpress.org/support/plugin/wpc-variation-bulk-editor' );
 
